@@ -1,0 +1,300 @@
+:root {
+    --bg-color: #0f172a;
+    --key-bg: #1e293b;
+    --key-text: #94a3b8;
+    --primary-color: #38bdf8;
+    --secondary-color: #818cf8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.05) 0%, transparent 40%);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 改为从顶部开始，方便滚动 */
+    overflow-y: auto; /* 允许纵向滚动 */
+    overflow-x: hidden;
+    padding: 40px 20px; /* 增加上下边距 */
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+header h1 {
+    font-size: 3rem; /* 稍微缩小标题，原为 3.5rem */
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -2px;
+    font-weight: 800;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+    line-height: 1.2; /* 增加行高防止裁剪 */
+}
+
+@keyframes titleGlow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.2));
+    }
+    to {
+        filter: drop-shadow(0 0 20px rgba(129, 140, 248, 0.6));
+    }
+}
+
+header p {
+    color: var(--key-text);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 35px;
+    background: rgba(30, 41, 59, 0.4);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.keyboard-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* 错位排列 */
+.row-1 { transform: translateX(10px); }
+.row-2 { transform: translateX(25px); }
+.row-3 { transform: translateX(45px); }
+
+.key {
+    background-color: var(--key-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.key .char {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--key-text);
+    z-index: 2;
+}
+
+.key .note {
+    font-size: 0.75rem;
+    color: rgba(148, 163, 184, 0.4);
+    margin-top: 2px;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.key.active {
+    background-color: var(--row-color);
+    transform: scale(0.92) translateY(3px);
+    box-shadow: 0 0 40px var(--row-color);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.key.active .char {
+    color: white;
+}
+
+.key.active .note {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 涟漪效果 */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: ripple-animation 0.5s ease-out;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 波纹效果 */
+.wave {
+    position: absolute;
+    border: 2px solid var(--row-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    animation: wave-animation 1.2s cubic-bezier(0, 0.2, 0.8, 1) forwards;
+}
+
+@keyframes wave-animation {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        width: 600px;
+        height: 600px;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.instructions {
+    margin-top: 3rem;
+    color: var(--key-text);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+.song-box {
+    margin-top: 2rem;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.song-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.song-selector-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.song-select {
+    background: rgba(30, 41, 59, 0.8);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.song-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.btn-autoplay {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+.btn-upload {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-upload:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-autoplay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+    filter: brightness(1.1);
+}
+
+.btn-autoplay:active {
+    transform: translateY(0);
+}
+
+.btn-autoplay.playing {
+    background: #ef4444;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.segment {
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    color: var(--secondary-color);
+}
+
+.keys {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 6px;
+    color: white;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.lyrics {
+    font-size: 0.9rem;
+    color: var(--key-text);
+    margin-top: 5px;
+    letter-spacing: 2px;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>码动音律 - 代码灯光秀</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>码动音律</h1>
+            <p>指尖跃动代码，键盘谱写乐章</p>
+        </header>
+        
+        <div id="keyboard" class="keyboard">
+            <!-- 键盘按键将由 JavaScript 动态生成 -->
+        </div>
+
+        <div class="instructions">
+            <p>提示：使用键盘上的字母键 (A-Z) 和数字键 (0-9) 进行演奏</p>
+        </div>
+
+        <div class="song-box">
+            <div class="song-header">
+                <div class="song-selector-group">
+                    <select id="songSelect" class="song-select">
+                        <option value="twinkle">小星星</option>
+                        <option value="newyear">新年快乐</option>
+                        <option value="gongxi">恭喜发财</option>
+                        <option value="childhood">童年的回忆 (经典钢琴)</option>
+                    </select>
+                    <button id="autoPlayBtn" class="btn-autoplay">自动演奏</button>
+                </div>
+                <div class="upload-group">
+                    <label for="fileUpload" class="btn-upload">上传乐谱</label>
+                    <input type="file" id="fileUpload" accept=".json" style="display: none;">
+                </div>
+            </div>
+            <div id="scoreDisplay" class="score">
+                <!-- 乐谱内容将由 JavaScript 动态填充 -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
